@@ -13,7 +13,6 @@ import java.util.Optional;
 @Repository
 @AllArgsConstructor
 public class SimpleTaskService implements TaskService {
-    private final SessionFactory sf;
     private final TaskStore taskStore;
 
 

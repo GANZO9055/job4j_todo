@@ -3,7 +3,11 @@
         <div class="container">
             <a class="navbar-brand" href="/">Job4jToDo</a>
             <div class="collapse navbar-collapse">
-
+                <div class="navbar-nav me-auto">
+                    <a class="nav-item nav-link active" th:href="@{/tasks}">Все</a>
+                    <a class="nav-item nav-link active" th:href="@{/tasks/completed}">Выполненные</a>
+                    <a class="nav-item nav-link active" th:href="@{/tasks/new}">Новые</a>
+                </div>
             </div>
         </div>
     </nav>
