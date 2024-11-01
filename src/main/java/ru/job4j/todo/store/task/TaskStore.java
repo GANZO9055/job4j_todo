@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface TaskStore {
     List<Task> findAll();
-    List<Task> findSuccess();
+    List<Task> findCompleted();
     List<Task> findNew();
     Optional<Task> findById(int id);
     Task create(Task task);
