@@ -1,16 +1,14 @@
-package ru.job4j.todo.service;
+package ru.job4j.todo.service.task;
 
 import lombok.AllArgsConstructor;
-import org.hibernate.SessionFactory;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 import ru.job4j.todo.model.Task;
-import ru.job4j.todo.store.task.HbnTaskStore;
 import ru.job4j.todo.store.task.TaskStore;
 
 import java.util.List;
 import java.util.Optional;
 
-@Repository
+@Service
 @AllArgsConstructor
 public class SimpleTaskService implements TaskService {
     private final TaskStore taskStore;

@@ -29,8 +29,8 @@ public class HbnTaskStore implements TaskStore {
             result = session.createQuery("FROM Task", Task.class).list();
             session.getTransaction().commit();
         } catch (Exception e) {
-            session.getTransaction().rollback();
             logger.error(e.getMessage(), e);
+            session.getTransaction().rollback();
         } finally {
             session.close();
         }
@@ -46,8 +46,8 @@ public class HbnTaskStore implements TaskStore {
             result = session.createQuery("FROM Task WHERE done = true", Task.class).list();
             session.getTransaction().commit();
         } catch (Exception e) {
-            session.getTransaction().rollback();
             logger.error(e.getMessage(), e);
+            session.getTransaction().rollback();
         } finally {
             session.close();
         }
@@ -63,8 +63,8 @@ public class HbnTaskStore implements TaskStore {
             result = session.createQuery("FROM Task WHERE done = false", Task.class).list();
             session.getTransaction().commit();
         } catch (Exception e) {
-            session.getTransaction().rollback();
             logger.error(e.getMessage(), e);
+            session.getTransaction().rollback();
         } finally {
             session.close();
         }
@@ -82,8 +82,8 @@ public class HbnTaskStore implements TaskStore {
                     .uniqueResultOptional();
             session.getTransaction().commit();
         } catch (Exception e) {
-            session.getTransaction().rollback();
             logger.error(e.getMessage(), e);
+            session.getTransaction().rollback();
         } finally {
             session.close();
         }
@@ -98,8 +98,8 @@ public class HbnTaskStore implements TaskStore {
             session.save(task);
             session.getTransaction().commit();
         } catch (Exception e) {
-            session.getTransaction().rollback();
             logger.error(e.getMessage(), e);
+            session.getTransaction().rollback();
         } finally {
             session.close();
         }
@@ -117,8 +117,8 @@ public class HbnTaskStore implements TaskStore {
             result = query.executeUpdate() > 0;
             session.getTransaction().commit();
         } catch (Exception e) {
-            session.getTransaction().rollback();
             logger.error(e.getMessage(), e);
+            session.getTransaction().rollback();
         } finally {
             session.close();
         }
@@ -144,8 +144,8 @@ public class HbnTaskStore implements TaskStore {
             result = query.executeUpdate() > 0;
             session.getTransaction().commit();
         } catch (Exception e) {
-            session.getTransaction().rollback();
             logger.error(e.getMessage(), e);
+            session.getTransaction().rollback();
         } finally {
             session.close();
         }
