@@ -1,15 +1,13 @@
 package ru.job4j.todo.controller;
 
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import ru.job4j.todo.model.Task;
 import ru.job4j.todo.service.TaskService;
+
+import java.util.Optional;
 
 @Controller
 @AllArgsConstructor
@@ -47,4 +45,39 @@ public class TaskController {
         return "redirect:/tasks";
     }
 
+    @GetMapping("/{id}")
+    public String getById(Model model, @PathVariable int id) {
+        Optional<Task> taskOptional = taskService.findById(id);
+        if (taskOptional.isEmpty()) {
+            model.addAttribute("message", "Задача не найдена");
+            return "error/404";
+        }
+        model.addAttribute("task", taskOptional.get());
+        return "tasks/updated";
+    }
+
+    @PostMapping("/update")
+    public String update(@ModelAttribute Task task, Model model) {
+        try {
+            var result = taskService.update(task);
+            if (!result) {
+                model.addAttribute("message", "Задачу не удалось обновить");
+                return "error/404";
+            }
+            return "redirect:/tasks";
+        } catch (Exception e) {
+            model.addAttribute("message", e.getMessage());
+            return "error/404";
+        }
+    }
+
+    @GetMapping("/delete/{id}")
+    public String delete(Model model, @PathVariable int id) {
+        boolean result = taskService.deleteById(id);
+        if (!result) {
+            model.addAttribute("message", "Задача с указанным идентификатором не найдена");
+            return "error/404";
+        }
+        return "redirect:/tasks";
+    }
 }

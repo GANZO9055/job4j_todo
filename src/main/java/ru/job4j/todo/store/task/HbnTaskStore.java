@@ -107,12 +107,14 @@ public class HbnTaskStore implements TaskStore {
     }
 
     @Override
-    public void deleteById(int id) {
+    public boolean deleteById(int id) {
         Session session = sf.openSession();
+        boolean result = false;
         try {
             session.beginTransaction();
-            session.createQuery("DELETE Task WHERE id = :id")
+            Query query = session.createQuery("DELETE Task WHERE id = :id")
                     .setParameter("id", id);
+            result = query.executeUpdate() > 0;
             session.getTransaction().commit();
         } catch (Exception e) {
             session.getTransaction().rollback();
@@ -120,6 +122,7 @@ public class HbnTaskStore implements TaskStore {
         } finally {
             session.close();
         }
+        return result;
     }
 
     @Override
@@ -128,14 +131,15 @@ public class HbnTaskStore implements TaskStore {
         boolean result = false;
         try {
             session.beginTransaction();
-            Query<Task> query = session.createQuery("""
+            Query query = session.createQuery("""
                     UPDATE Task
-                    SET title = :title, description = :description, done = :done
+                    SET title = :title, description = :description, created = :created, done = :done
                     WHERE id = :id
-                    """, Task.class)
+                    """)
                     .setParameter("id", task.getId())
                     .setParameter("title", task.getTitle())
                     .setParameter("description", task.getDescription())
+                    .setParameter("created", task.getCreated())
                     .setParameter("done", task.isDone());
             result = query.executeUpdate() > 0;
             session.getTransaction().commit();
