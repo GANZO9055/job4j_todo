@@ -48,4 +48,10 @@ public class SimpleTaskService implements TaskService {
     public boolean update(Task task) {
         return taskStore.update(task);
     }
+
+    @Override
+    public void completedTask(Task task) {
+        task.setDone(true);
+        taskStore.update(task);
+    }
 }

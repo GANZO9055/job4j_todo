@@ -53,22 +53,28 @@ public class TaskController {
             return "error/404";
         }
         model.addAttribute("task", taskOptional.get());
-        return "tasks/updated";
+        return "tasks/description";
     }
 
     @PostMapping("/update")
     public String update(@ModelAttribute Task task, Model model) {
-        try {
-            var result = taskService.update(task);
-            if (!result) {
-                model.addAttribute("message", "Задачу не удалось обновить");
-                return "error/404";
-            }
-            return "redirect:/tasks";
-        } catch (Exception e) {
-            model.addAttribute("message", e.getMessage());
+        var result = taskService.update(task);
+        if (!result) {
+            model.addAttribute("message", "Задачу не удалось обновить");
             return "error/404";
         }
+        return "redirect:/tasks";
+    }
+
+    @GetMapping("/completed/{id}")
+    public String completed(Model model, @PathVariable int id) {
+        Optional<Task> taskOptional = taskService.findById(id);
+        if (taskOptional.isEmpty()) {
+            model.addAttribute("message", "Задача не найдена");
+            return "error/404";
+        }
+        taskService.completedTask(taskOptional.get());
+        return "redirect:/tasks";
     }
 
     @GetMapping("/delete/{id}")

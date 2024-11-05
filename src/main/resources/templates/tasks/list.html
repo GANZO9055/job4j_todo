@@ -14,6 +14,9 @@
 <div class="container-fluid p-0">
     <header th:insert="blocks/header :: header"></header>
     <div class="container">
+        <div class="nav-item nav-link active">
+            <a class="btn btn-success w-25" th:href="@{/tasks/created}">Добавить задание</a>
+        </div>
         <div class="row">
             <table class="table">
                 <thead>
