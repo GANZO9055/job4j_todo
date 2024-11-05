@@ -14,4 +14,6 @@ public interface TaskStore {
 
     boolean deleteById(int id);
     boolean update(Task task);
+
+    boolean completedTask(Task task);
 }

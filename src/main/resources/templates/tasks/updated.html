@@ -40,9 +40,15 @@
                 <div class="col-6"></div>
                 <div class="col-6">
                     <div class="row">
-                        <div class="col-4"><a class="btn btn-light w-100" th:href="@{/tasks}">Отмена</a></div>
-                        <div class="col-4"><a class="btn btn-danger w-100" th:href="@{/tasks/delete/{id}(id=${task.id})}">Удалить</a></div>
-                        <div class="col-4"><button class="btn btn-success w-100" type="submit">Обновить</button></div>
+                        <div class="col-4">
+                            <a class="btn btn-light w-100" th:href="@{/tasks}">Отмена</a>
+                        </div>
+                        <div class="col-4">
+                            <a class="btn btn-danger w-100" th:href="@{/tasks/delete/{id}(id=${task.id})}">Удалить</a>
+                        </div>
+                        <div class="col-4">
+                            <button class="btn btn-success w-100" type="submit">Обновить</button>
+                        </div>
                     </div>
                 </div>
             </div>

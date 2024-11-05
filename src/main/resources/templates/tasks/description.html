@@ -14,7 +14,28 @@
 <div class="container-fluid p-0">
     <header th:insert="blocks/header :: header"></header>
     <div class="container">
-
+        <div class="row mb-3">
+            <div class="col-9">
+                <span><h3 th:text="${task.title}"/></span>
+                <span><h6 th:text="${task.description}"/></span>
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <div class="col-6"></div>
+            <div class="col-6">
+                <div class="row">
+                    <div class="col-4">
+                        <a class="btn btn-success w-100" th:href="@{/tasks/completed/{id}(id=${task.id})}">Выполнено</a>
+                    </div>
+                    <div class="col-4">
+                        <a class="btn btn-light w-100" th:href="@{/tasks/update/{id}(id=${task.id})}">Редактировать</a>
+                    </div>
+                    <div class="col-4">
+                        <a class="btn btn-danger w-100" th:href="@{/tasks/delete/{id}(id=${task.id})}">Удалить</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <footer th:insert="~{blocks/footer :: footer}"></footer>
 </div>

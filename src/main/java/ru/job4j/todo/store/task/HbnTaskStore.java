@@ -150,4 +150,28 @@ public class HbnTaskStore implements TaskStore {
         }
         return result;
     }
+
+    @Override
+    public boolean completedTask(Task task) {
+        Session session = sf.openSession();
+        boolean result = false;
+        try {
+            session.beginTransaction();
+            Query query = session.createQuery("""
+                    UPDATE Task
+                    SET done = :done
+                    WHERE id = :id
+                    """)
+                    .setParameter("id", task.getId())
+                    .setParameter("done", true);
+            result = query.executeUpdate() > 0;
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            session.getTransaction().rollback();
+        } finally {
+            session.close();
+        }
+        return result;
+    }
 }
