@@ -50,7 +50,7 @@ public class SimpleTaskService implements TaskService {
     }
 
     @Override
-    public boolean completedTask(Task task) {
-        return taskStore.completedTask(task);
+    public boolean completedTask(int id) {
+        return taskStore.completedTask(id);
     }
 }

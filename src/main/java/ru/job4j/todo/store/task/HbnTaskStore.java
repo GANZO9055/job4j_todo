@@ -152,7 +152,7 @@ public class HbnTaskStore implements TaskStore {
     }
 
     @Override
-    public boolean completedTask(Task task) {
+    public boolean completedTask(int id) {
         Session session = sf.openSession();
         boolean result = false;
         try {
@@ -162,7 +162,7 @@ public class HbnTaskStore implements TaskStore {
                     SET done = :done
                     WHERE id = :id
                     """)
-                    .setParameter("id", task.getId())
+                    .setParameter("id", id)
                     .setParameter("done", true);
             result = query.executeUpdate() > 0;
             session.getTransaction().commit();

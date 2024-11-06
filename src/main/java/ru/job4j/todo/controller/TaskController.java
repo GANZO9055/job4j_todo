@@ -89,12 +89,7 @@ public class TaskController {
 
     @GetMapping("/completed/{id}")
     public String completed(Model model, @PathVariable int id) {
-        Optional<Task> taskOptional = taskService.findById(id);
-        if (taskOptional.isEmpty()) {
-            model.addAttribute("message", "Задача не найдена");
-            return "error/404";
-        }
-        boolean result = taskService.completedTask(taskOptional.get());
+        boolean result = taskService.completedTask(id);
         if (!result) {
             model.addAttribute("message", "Задача не переведена в состояние Выполнено");
             return "error/404";
