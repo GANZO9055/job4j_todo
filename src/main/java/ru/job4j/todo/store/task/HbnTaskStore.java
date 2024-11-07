@@ -1,16 +1,14 @@
 package ru.job4j.todo.store.task;
 
 import lombok.AllArgsConstructor;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 
-import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import ru.job4j.todo.model.Task;
+import ru.job4j.todo.store.CrudStore;
+import ru.job4j.todo.store.user.HbnUserStore;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -19,7 +17,7 @@ import java.util.Optional;
 @AllArgsConstructor
 public class HbnTaskStore implements TaskStore {
     private final CrudStore crudStore;
-    private final Logger logger = LoggerFactory.getLogger(HbnTaskStore.class);
+    private final Logger logger = LoggerFactory.getLogger(HbnUserStore.class);
 
     @Override
     public List<Task> findAll() {
@@ -38,12 +36,24 @@ public class HbnTaskStore implements TaskStore {
 
     @Override
     public Optional<Task> findById(int id) {
-        return crudStore.optional("FROM Task WHERE id = :id", Task.class, Map.of("id", id));
+        try {
+            return crudStore.optional(
+                    "FROM Task WHERE id = :id",
+                    Task.class,
+                    Map.of("id", id));
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+        }
+        return Optional.empty();
     }
 
     @Override
     public Task create(Task task) {
-        crudStore.run(session -> session.persist(task));
+        try {
+            crudStore.run(session -> session.persist(task));
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+        }
         return task;
     }
 
