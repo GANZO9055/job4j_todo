@@ -21,17 +21,17 @@ public class HbnTaskStore implements TaskStore {
 
     @Override
     public List<Task> findAll() {
-        return crudStore.query("FROM Task", Task.class);
+        return crudStore.query("FROM Task f JOIN FETCH f.priority", Task.class);
     }
 
     @Override
     public List<Task> findCompleted() {
-        return crudStore.query("FROM Task WHERE done = true", Task.class);
+        return crudStore.query("FROM Task f JOIN FETCH f.priority WHERE done = true", Task.class);
     }
 
     @Override
     public List<Task> findNew() {
-        return crudStore.query("FROM Task WHERE done = false", Task.class);
+        return crudStore.query("FROM Task f JOIN FETCH f.priority WHERE done = false", Task.class);
     }
 
     @Override
