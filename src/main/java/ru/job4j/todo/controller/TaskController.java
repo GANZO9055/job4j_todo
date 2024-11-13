@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import ru.job4j.todo.converter.ConvertDate;
 import ru.job4j.todo.model.Category;
 import ru.job4j.todo.model.Task;
 import ru.job4j.todo.model.User;
@@ -26,8 +27,11 @@ public class TaskController {
     private final CategoryService categoryService;
 
     @GetMapping
-    public String getAll(Model model) {
-        model.addAttribute("tasks", taskService.findAll());
+    public String getAll(Model model, HttpSession session) {
+        var tasks = taskService.findAll();
+        User user = (User) session.getAttribute("user");
+        ConvertDate.convertDate(tasks, user);
+        model.addAttribute("tasks", tasks);
         return "tasks/list";
     }
 
