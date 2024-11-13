@@ -54,6 +54,17 @@ public class CrudStore {
         return tx(command);
     }
 
+    public <T> List<T> query(String query, Class<T> tClass, Map<String, Object> args) {
+        Function<Session, List<T>> command = session -> {
+            var result = session.createQuery(query, tClass);
+            for (Map.Entry<String, Object> arg : args.entrySet()) {
+                result.setParameter(arg.getKey(), arg.getValue());
+            }
+            return result.list();
+        };
+        return tx(command);
+    }
+
     public <T> T tx(Function<Session, T> command) {
         Session session = sf.openSession();
         Transaction transaction = null;
